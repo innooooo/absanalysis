@@ -1,0 +1,42 @@
+# === PYTHON BACKEND ===
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.log
+
+# Environment & config
+.env
+.env.*.local
+*.db
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# === REACT FRONTEND ===
+node_modules/
+build/
+dist/
+.cache/
+.next/
+*.log
+
+# React environment files
+.env
+.env.*.local
+
+# Local coverage reports
+coverage/
+*.lcov
+
+# === SYSTEM FILES ===
+.DS_Store
+Thumbs.db
+desktop.ini

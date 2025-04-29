@@ -1,0 +1,513 @@
+<html><head><meta charset="utf-8"/><title>Test Report</title><style type="text/css">:root {
+  --text-primary: #111;
+  --text-secondary: #4f4f4f;
+  --success: #006633;
+  --success-bright: #80ffbf;
+  --danger: #cc071e;
+  --danger-bright: #fbdfe0;
+  --warning: #995c00;
+  --warning-bright: #ffeea8;
+  --panel: #eee;
+  --border: #949494;
+  --disabled: #6b6b6b;
+}
+
+html,
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  color: var(--text-primary);
+}
+body {
+  padding: 2rem 1rem;
+}
+.jesthtml-content {
+  margin: 0 auto;
+  max-width: 70rem;
+}
+header {
+  display: flex;
+  align-items: center;
+}
+#title {
+  margin: 0;
+  flex-grow: 1;
+}
+#logo {
+  height: 4rem;
+}
+#timestamp {
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+#metadata-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.additional-information-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+}
+
+/** SUMMARY */
+#summary {
+  color: var(--text-primary);
+  display: flex;
+  font-family: monospace;
+  font-size: 1rem;
+}
+#summary > div {
+  margin-right: 0.5rem;
+  background: var(--panel);
+  padding: 1rem;
+  min-width: 15rem;
+}
+#summary > div:last-child {
+  margin-right: 0;
+}
+@media only screen and (max-width: 720px) {
+  #summary {
+    flex-direction: column;
+  }
+  #summary > div {
+    margin-right: 0;
+    margin-top: 1rem;
+  }
+  #summary > div:first-child {
+    margin-top: 0;
+  }
+}
+
+.summary-total {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.summary-passed {
+  color: var(--success);
+  border-left: 0.4rem solid var(--success);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-failed,
+.summary-obsolete-snapshots {
+  color: var(--danger);
+  border-left: 0.4rem solid var(--danger);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-pending {
+  color: var(--warning);
+  border-left: 0.4rem solid var(--warning);
+  padding-left: 0.5rem;
+  margin-bottom: 0.15rem;
+}
+.summary-empty {
+  color: var(--disabled);
+  border-left: 0.4rem solid var(--disabled);
+  margin-bottom: 0.15rem;
+}
+
+.test-result {
+  padding: 1rem;
+  margin-bottom: 0.25rem;
+}
+.test-result:last-child {
+  border: 0;
+}
+.test-result.passed {
+  background-color: var(--success-bright);
+  color: var(--success);
+}
+.test-result.failed {
+  background-color: var(--danger-bright);
+  color: var(--danger);
+}
+.test-result.pending {
+  background-color: var(--warning-bright);
+  color: var(--warning);
+}
+
+.test-info {
+  display: flex;
+  justify-content: space-between;
+}
+.test-suitename {
+  width: 20%;
+  text-align: left;
+  font-weight: bold;
+  word-break: break-word;
+}
+.test-title {
+  width: 40%;
+  text-align: left;
+  font-style: italic;
+}
+.test-status {
+  width: 20%;
+  text-align: right;
+}
+.test-duration {
+  width: 10%;
+  text-align: right;
+  font-size: 0.85rem;
+}
+
+.failureMessages {
+  padding: 0 1rem;
+  margin-top: 1rem;
+  border-top: 1px dashed var(--danger);
+}
+.failureMessages.suiteFailure {
+  border-top: none;
+}
+.failureMsg {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.suite-container {
+  margin-bottom: 1rem;
+}
+.suite-info {
+  padding: 1rem;
+  background-color: var(--panel);
+  color: var(--text-secondary);
+  border: 0.15rem solid;
+  border-color: var(--panel);
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+.suite-info:hover {
+  border-color: var(--border);
+  cursor: pointer;
+}
+.suite-info .suite-path {
+  word-break: break-all;
+  flex-grow: 1;
+  font-family: monospace;
+  font-size: 1rem;
+}
+.suite-info .suite-time {
+  margin-left: 1rem;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.85rem;
+}
+.suite-info .suite-time.warn {
+  background-color: var(--danger);
+  color: #fff;
+}
+.suite-info:before {
+  content: "\2303";
+  display: inline-block;
+  margin-right: 1rem;
+  transform: rotate(180deg) translateY(0.15rem);
+}
+.suite-container[open] .suite-info:before {
+  transform: rotate(0deg) translateY(0.15rem);
+}
+
+/* CONSOLE LOGS */
+.suite-consolelog {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: var(--panel);
+}
+.suite-consolelog-header {
+  font-weight: bold;
+}
+.suite-consolelog-item {
+  padding: 0.5rem;
+}
+.suite-consolelog-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-consolelog-item-origin {
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+.suite-consolelog-item-message {
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+
+/* OBSOLETE SNAPSHOTS */
+.suite-obsolete-snapshots {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: var(--danger-bright);
+  color: var(--danger);
+}
+.suite-obsolete-snapshots-header {
+  font-weight: bold;
+}
+.suite-obsolete-snapshots-item {
+  padding: 0.5rem;
+}
+.suite-obsolete-snapshots-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-obsolete-snapshots-item-message {
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+</style></head><body><main class="jesthtml-content"><header><h1 id="title">Test Report</h1></header><section id="metadata-container"><div id="timestamp">Started: 2025-04-29 10:59:30</div><div id="summary"><div id="suite-summary"><div class="summary-total">Suites (4)</div><div class="summary-passed  summary-empty">0 passed</div><div class="summary-failed ">4 failed</div><div class="summary-pending  summary-empty">0 pending</div></div><div id="test-summary"><div class="summary-total">Tests (4)</div><div class="summary-passed  summary-empty">0 passed</div><div class="summary-failed ">4 failed</div><div class="summary-pending  summary-empty">0 pending</div></div></div></section><details id="suite-1" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\user\Documents\absa-tailwind-app\src\components\fileSubmit.test.js</div><div class="suite-time warn">14.228s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="test-info"><div class="test-suitename"> </div><div class="test-title">renders category counts and sentiment summary after upload</div><div class="test-status">failed</div><div class="test-duration">5.038s</div></div><div class="failureMessages"> <pre class="failureMsg">ReferenceError: ResizeObserver is not defined
+    at C:\Users\user\Documents\absa-tailwind-app\node_modules\recharts\lib\component\ResponsiveContainer.js:101:20
+    at Object.react-stack-bottom-frame (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:23949:20)
+    at runWithFiberInDEV (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:1522:13)
+    at commitHookEffectListMount (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:11905:29)
+    at commitHookPassiveMountEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:12028:11)
+    at commitPassiveMountOnFiber (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13841:13)
+    at recursivelyTraversePassiveMountEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13815:11)
+    at commitPassiveMountOnFiber (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13957:11)
+    at recursivelyTraversePassiveMountEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13815:11)
+    at commitPassiveMountOnFiber (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13957:11)
+    at recursivelyTraversePassiveMountEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13815:11)
+    at commitPassiveMountOnFiber (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13834:11)
+    at recursivelyTraversePassiveMountEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13815:11)
+    at commitPassiveMountOnFiber (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13853:11)
+    at flushPassiveEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:15737:9)
+    at C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:15379:15
+    at performWorkUntilDeadline (C:\Users\user\Documents\absa-tailwind-app\node_modules\scheduler\cjs\scheduler.development.js:45:48)
+    at Timeout.task [as _onTimeout] (C:\Users\user\Documents\absa-tailwind-app\node_modules\jsdom\lib\jsdom\browser\Window.js:520:19)
+    at listOnTimeout (node:internal/timers:594:17)
+    at processTimers (node:internal/timers:529:7)</pre><pre class="failureMsg">Error: thrown: "Exceeded timeout of 5000 ms for a test.
+Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+    at Object.test (C:\Users\user\Documents\absa-tailwind-app\src\components\fileSubmit.test.js:13:1)
+    at Runtime._execModule (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-runtime\build\index.js:1439:24)
+    at Runtime._loadModule (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-runtime\build\index.js:1022:12)
+    at Runtime.requireModule (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-runtime\build\index.js:882:12)
+    at jestAdapter (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:77:13)
+    at runTestInternal (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-runner\build\runTest.js:444:34)</pre></div></div></div><div class="suite-consolelog"><div class="suite-consolelog-header">Console Log</div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at Object.&lt;anonymous&gt;.process.env.NODE_ENV.reportGlobalError (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:24130:23)
+    at defaultOnUncaughtError (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:8282:7)
+    at logUncaughtError (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:8352:11)
+    at runWithFiberInDEV (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:1522:13)
+    at lane.callback (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:8382:9)
+    at callCallback (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:5363:16)
+    at commitCallbacks (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:5383:11)
+    at runWithFiberInDEV (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:1522:13)
+    at commitLayoutEffectOnFiber (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:12709:15)
+    at flushLayoutEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:15559:15)
+    at commitRoot (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:15402:9)
+    at commitRootWhenReady (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:14652:7)
+    at performWorkOnRoot (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:14575:15)
+    at performSyncWorkOnRoot (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:16231:7)
+    at flushSyncWorkAcrossRoots_impl (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:16079:21)
+    at flushPassiveEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:15749:9)
+    at C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:15379:15
+    at performWorkUntilDeadline (C:\Users\user\Documents\absa-tailwind-app\node_modules\scheduler\cjs\scheduler.development.js:45:48)
+    at Timeout.task [as _onTimeout] (C:\Users\user\Documents\absa-tailwind-app\node_modules\jsdom\lib\jsdom\browser\Window.js:520:19)
+    at listOnTimeout (node:internal/timers:594:17)
+    at processTimers (node:internal/timers:529:7)</pre><pre class="suite-consolelog-item-message">ReferenceError: ResizeObserver is not defined
+    at C:\Users\user\Documents\absa-tailwind-app\node_modules\recharts\lib\component\ResponsiveContainer.js:101:20
+    at Object.react-stack-bottom-frame (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:23949:20)
+    at runWithFiberInDEV (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:1522:13)
+    at commitHookEffectListMount (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:11905:29)
+    at commitHookPassiveMountEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:12028:11)
+    at commitPassiveMountOnFiber (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13841:13)
+    at recursivelyTraversePassiveMountEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13815:11)
+    at commitPassiveMountOnFiber (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13957:11)
+    at recursivelyTraversePassiveMountEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13815:11)
+    at commitPassiveMountOnFiber (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13957:11)
+    at recursivelyTraversePassiveMountEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13815:11)
+    at commitPassiveMountOnFiber (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13834:11)
+    at recursivelyTraversePassiveMountEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13815:11)
+    at commitPassiveMountOnFiber (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:13853:11)
+    at flushPassiveEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:15737:9)
+    at C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:15379:15
+    at performWorkUntilDeadline (C:\Users\user\Documents\absa-tailwind-app\node_modules\scheduler\cjs\scheduler.development.js:45:48)
+    at Timeout.task [as _onTimeout] (C:\Users\user\Documents\absa-tailwind-app\node_modules\jsdom\lib\jsdom\browser\Window.js:520:19)
+    at listOnTimeout (node:internal/timers:594:17)
+    at processTimers (node:internal/timers:529:7)</pre></div><div class="suite-consolelog-item"><pre class="suite-consolelog-item-origin">    at defaultOnUncaughtError (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:8283:15)
+    at logUncaughtError (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:8352:11)
+    at runWithFiberInDEV (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:1522:13)
+    at lane.callback (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:8382:9)
+    at callCallback (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:5363:16)
+    at commitCallbacks (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:5383:11)
+    at runWithFiberInDEV (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:1522:13)
+    at commitLayoutEffectOnFiber (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:12709:15)
+    at flushLayoutEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:15559:15)
+    at commitRoot (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:15402:9)
+    at commitRootWhenReady (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:14652:7)
+    at performWorkOnRoot (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:14575:15)
+    at performSyncWorkOnRoot (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:16231:7)
+    at flushSyncWorkAcrossRoots_impl (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:16079:21)
+    at flushPassiveEffects (C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:15749:9)
+    at C:\Users\user\Documents\absa-tailwind-app\node_modules\react-dom\cjs\react-dom-client.development.js:15379:15
+    at performWorkUntilDeadline (C:\Users\user\Documents\absa-tailwind-app\node_modules\scheduler\cjs\scheduler.development.js:45:48)
+    at Timeout.task [as _onTimeout] (C:\Users\user\Documents\absa-tailwind-app\node_modules\jsdom\lib\jsdom\browser\Window.js:520:19)
+    at listOnTimeout (node:internal/timers:594:17)
+    at processTimers (node:internal/timers:529:7)</pre><pre class="suite-consolelog-item-message">An error occurred in the &lt;ForwardRef&gt; component.
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+</pre></div></div></details><details id="suite-2" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\user\Documents\absa-tailwind-app\src\components\fileInput.test.js</div><div class="suite-time">2.041s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="test-info"><div class="test-suitename"> </div><div class="test-title">handles file input change correctly</div><div class="test-status">failed</div><div class="test-duration">0.041s</div></div><div class="failureMessages"> <pre class="failureMsg">TestingLibraryElementError: Unable to find a label with the text of: /upload a file/i
+
+Ignored nodes: comments, script, style
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div
+      class="my-8 mx-8"
+    &gt;
+      &lt;div
+        class="my-8 font-bold text-5xl"
+      &gt;
+        Upload Reviews
+      &lt;/div&gt;
+      &lt;p
+        class="text-lg mb-8"
+      &gt;
+        Select a CSV file to upload your product reviews for analysis. Ensure the file is formatted correctly.
+      &lt;/p&gt;
+      &lt;form
+        class="w-full max-w-md mx-auto p-6 border border-gray-300 rounded-lg shadow-lg flex flex-col space-y-4"
+      &gt;
+        &lt;label
+          class="font-medium text-gray-700"
+          for="file-upload"
+        &gt;
+          Upload CSV File:
+        &lt;/label&gt;
+        &lt;input
+          accept=".csv"
+          class="file-input file-input-bordered w-full p-2 border rounded"
+          id="file-upload"
+          type="file"
+        /&gt;
+        &lt;button
+          class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 disabled:bg-gray-400 flex items-center justify-center space-x-2"
+          type="submit"
+        &gt;
+          Submit
+        &lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+    at Object.getElementError (C:\Users\user\Documents\absa-tailwind-app\node_modules\@testing-library\dom\dist\config.js:37:19)
+    at getAllByLabelText (C:\Users\user\Documents\absa-tailwind-app\node_modules\@testing-library\dom\dist\queries\label-text.js:111:38)
+    at C:\Users\user\Documents\absa-tailwind-app\node_modules\@testing-library\dom\dist\query-helpers.js:52:17
+    at C:\Users\user\Documents\absa-tailwind-app\node_modules\@testing-library\dom\dist\query-helpers.js:95:19
+    at Object.getByLabelText (C:\Users\user\Documents\absa-tailwind-app\src\components\fileInput.test.js:8:28)
+    at Promise.then.completed (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\run.js:316:40)
+    at _runTest (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\run.js:126:9)
+    at run (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-runner\build\runTest.js:444:34)</pre></div></div></div></details><details id="suite-3" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\user\Documents\absa-tailwind-app\src\components\componentRendering.test.js</div><div class="suite-time">2.079s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="test-info"><div class="test-suitename"> </div><div class="test-title">renders category counts and sentiment summary after upload</div><div class="test-status">failed</div><div class="test-duration">0.043s</div></div><div class="failureMessages"> <pre class="failureMsg">TestingLibraryElementError: Unable to find a label with the text of: /file input/i
+
+Ignored nodes: comments, script, style
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div
+      class="my-8 mx-8"
+    &gt;
+      &lt;div
+        class="my-8 font-bold text-5xl"
+      &gt;
+        Upload Reviews
+      &lt;/div&gt;
+      &lt;p
+        class="text-lg mb-8"
+      &gt;
+        Select a CSV file to upload your product reviews for analysis. Ensure the file is formatted correctly.
+      &lt;/p&gt;
+      &lt;form
+        class="w-full max-w-md mx-auto p-6 border border-gray-300 rounded-lg shadow-lg flex flex-col space-y-4"
+      &gt;
+        &lt;label
+          class="font-medium text-gray-700"
+          for="file-upload"
+        &gt;
+          Upload CSV File:
+        &lt;/label&gt;
+        &lt;input
+          accept=".csv"
+          class="file-input file-input-bordered w-full p-2 border rounded"
+          id="file-upload"
+          type="file"
+        /&gt;
+        &lt;button
+          class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 disabled:bg-gray-400 flex items-center justify-center space-x-2"
+          type="submit"
+        &gt;
+          Submit
+        &lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+    at Object.getElementError (C:\Users\user\Documents\absa-tailwind-app\node_modules\@testing-library\dom\dist\config.js:37:19)
+    at getAllByLabelText (C:\Users\user\Documents\absa-tailwind-app\node_modules\@testing-library\dom\dist\queries\label-text.js:111:38)
+    at C:\Users\user\Documents\absa-tailwind-app\node_modules\@testing-library\dom\dist\query-helpers.js:52:17
+    at C:\Users\user\Documents\absa-tailwind-app\node_modules\@testing-library\dom\dist\query-helpers.js:95:19
+    at getByLabelText (C:\Users\user\Documents\absa-tailwind-app\src\components\componentRendering.test.js:19:28)
+    at call (C:\Users\user\Documents\absa-tailwind-app\src\components\componentRendering.test.js:2:1)
+    at Generator.tryCatch (C:\Users\user\Documents\absa-tailwind-app\src\components\componentRendering.test.js:2:1)
+    at Generator._invoke [as next] (C:\Users\user\Documents\absa-tailwind-app\src\components\componentRendering.test.js:2:1)
+    at asyncGeneratorStep (C:\Users\user\Documents\absa-tailwind-app\src\components\componentRendering.test.js:2:1)
+    at asyncGeneratorStep (C:\Users\user\Documents\absa-tailwind-app\src\components\componentRendering.test.js:2:1)
+    at _next (C:\Users\user\Documents\absa-tailwind-app\src\components\componentRendering.test.js:2:1)
+    at new Promise (&lt;anonymous&gt;)
+    at Object.&lt;anonymous&gt; (C:\Users\user\Documents\absa-tailwind-app\src\components\componentRendering.test.js:2:1)
+    at Promise.then.completed (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\run.js:316:40)
+    at _runTest (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\run.js:126:9)
+    at run (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-runner\build\runTest.js:444:34)</pre></div></div></div></details><details id="suite-4" class="suite-container" open=""><summary class="suite-info"><div class="suite-path">C:\Users\user\Documents\absa-tailwind-app\src\components\fileReport.test.js</div><div class="suite-time">1.735s</div></summary><div class="suite-tests"><div class="test-result failed"><div class="test-info"><div class="test-suitename"> </div><div class="test-title">triggers download when report is available</div><div class="test-status">failed</div><div class="test-duration">0.007s</div></div><div class="failureMessages"> <pre class="failureMsg">Error: Property `createObjectURL` does not exist in the provided object
+    at ModuleMocker.spyOn (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-mock\build\index.js:731:13)
+    at spyOn (C:\Users\user\Documents\absa-tailwind-app\src\components\fileReport.test.js:14:8)
+    at call (C:\Users\user\Documents\absa-tailwind-app\src\components\fileReport.test.js:2:1)
+    at Generator.tryCatch (C:\Users\user\Documents\absa-tailwind-app\src\components\fileReport.test.js:2:1)
+    at Generator._invoke [as next] (C:\Users\user\Documents\absa-tailwind-app\src\components\fileReport.test.js:2:1)
+    at asyncGeneratorStep (C:\Users\user\Documents\absa-tailwind-app\src\components\fileReport.test.js:2:1)
+    at asyncGeneratorStep (C:\Users\user\Documents\absa-tailwind-app\src\components\fileReport.test.js:2:1)
+    at _next (C:\Users\user\Documents\absa-tailwind-app\src\components\fileReport.test.js:2:1)
+    at new Promise (&lt;anonymous&gt;)
+    at Object.&lt;anonymous&gt; (C:\Users\user\Documents\absa-tailwind-app\src\components\fileReport.test.js:2:1)
+    at Promise.then.completed (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\run.js:316:40)
+    at _runTest (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\run.js:126:9)
+    at run (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (C:\Users\user\Documents\absa-tailwind-app\node_modules\jest-runner\build\runTest.js:444:34)</pre></div></div></div></details></main></body></html>
